@@ -345,7 +345,7 @@ PODS:
     - React-perflogger (= 0.66.3)
   - RNCAsyncStorage (1.12.1):
     - React-Core
-  - RNDeviceInfo (8.4.8):
+  - RNDeviceInfo (8.5.0):
     - React-Core
   - RNScreens (3.9.0):
     - React-Core
@@ -553,7 +553,7 @@ SPEC CHECKSUMS:
   React-runtimeexecutor: bbbdb3d8fcf327c6e2249ee71b6ef1764b7dc266
   ReactCommon: 9bac022ab71596f2b0fde1268272543184c63971
   RNCAsyncStorage: b03032fdbdb725bea0bd9e5ec5a7272865ae7398
-  RNDeviceInfo: 0400a6d0c94186d1120c3cbd97b23abc022187a9
+  RNDeviceInfo: a674f06c5a5bd496aebb809cbc3be61cfd612a65
   RNScreens: 4d79118be80f79fa1f4aa131909a1d6e86280af3
   Yoga: 32a18c0e845e185f4a2a66ec76e1fd1f958f22fa
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a

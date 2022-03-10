@@ -7,65 +7,36 @@
  */
 
 import React, {useState} from 'react';
-import {View, Text, StatusBar, TouchableOpacity, TextInput} from 'react-native';
+import {View, Text, StatusBar, TextInput} from 'react-native';
 
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {Button} from "./components/Button";
 
 const Stack = createNativeStackNavigator();
 
 const InitialScreen = ({navigation}) => {
   return (
     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <TouchableOpacity
-        style={{
-          borderRadius: 12,
-          borderWidth: 3,
-          width: 150,
-          height: 40,
-          justifyContent: 'center',
-          alignItems: 'center',
-          marginBottom: 10
-        }}
+      <Button
+        text={'Go to input screen'}
         onPress={() => {
           navigation.navigate('InputScreen');
-        }}>
-        <Text>Go to input screen</Text>
-      </TouchableOpacity>
+        }} />
       <View style={{marginTop: 50}}>
-        <TouchableOpacity
-          style={{
-            borderRadius: 12,
-            borderWidth: 3,
-            width: 150,
-            height: 40,
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginBottom: 10
-          }}
+        <Button
+          text={'Go to fetch screen'}
           onPress={() => {
             navigation.navigate('FetchScreen');
-          }}>
-          <Text>Go to fetch screen</Text>
-        </TouchableOpacity>
+          }} />
       </View>
       <View style={{marginTop: 50}}>
-        <TouchableOpacity
-          style={{
-            borderRadius: 12,
-            borderWidth: 3,
-            borderColor: 'red',
-            width: 150,
-            height: 40,
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginBottom: 10
-          }}
+        <Button
+          isError
+          text={'Go to error screen'}
           onPress={() => {
             navigation.navigate('ErrorScreen');
-          }}>
-          <Text style={{color: 'red'}}>Go to error screen</Text>
-        </TouchableOpacity>
+          }}/>
       </View>
     </View>
   );
@@ -74,8 +45,10 @@ const InitialScreen = ({navigation}) => {
 const InputScreen = () => {
   const [value, setValue] = useState('');
   return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text>Type something...</Text>
+    <View style={{flex: 1, marginTop: '50%', alignItems: 'center'}}>
+      <Text style={{ margin: 10 }}>Please toggle software keyboard!</Text>
+      <Text style={{ margin: 10 }}>To enable the keyboard go to the top bar menu:</Text>
+      <Text style={{ fontWeight: 'bold' }}>I/O -> Keyboard -> Toggle Software Keyboard</Text>
       <TextInput
         style={{
           height: 40,
@@ -88,6 +61,11 @@ const InputScreen = () => {
         value={value}
         onChangeText={setValue}
       />
+      <Button
+        text={'Finish typing'}
+        onPress={() => {
+          setValue('');
+        }} />
     </View>
   );
 };
@@ -100,33 +78,27 @@ const FetchScreen = () => {
   const handleOnPress = async () => {
     const start = Date.now();
 
-    const response = await fetch(
-      `https://jsonplaceholder.typicode.com/todos/${userId}`,
-    );
-    const result = await response.json();
+    try {
+      const response = await fetch(
+        `https://jsonplaceholder.typicode.com/todos/${userId}`,
+      );
+      const result = await response.json();
 
-    const millis = Date.now() - start;
-    setResponse(JSON.stringify(result));
-    setUserId(userId + 1);
-    setResponseTime(millis);
+      const millis = Date.now() - start;
+      setResponse(JSON.stringify(result));
+      setUserId(userId + 1);
+      setResponseTime(millis);
+    } catch (error) {
+      console.log('There has been an error while fetching json API', error)
+    }
   };
 
   return (
     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <TouchableOpacity
-        style={{
-          borderRadius: 12,
-          borderWidth: 3,
-          width: 100,
-          height: 30,
-          justifyContent: 'center',
-          alignItems: 'center',
-          marginBottom: 10
-        }}
+      <Button
+        text={'Call Fetch'}
         onPress={handleOnPress}
-      >
-        <Text>Call Fetch</Text>
-      </TouchableOpacity>
+      />
       {response ? <Text style={{ width: 250, margin: 10 }}>JSON response: {response}</Text> : null}
       {responseTime ? <Text>Response time in millis: {responseTime}</Text>: null}
     </View>
@@ -136,12 +108,12 @@ const FetchScreen = () => {
 const ErrorScreen = () => {
   return (
     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <TouchableOpacity
+      <Button
+        isError
+        text={'Trigger Error'}
         onPress={() => {
           throw new Error('Test error');
-        }}>
-        <Text>Trigger Error</Text>
-      </TouchableOpacity>
+        }}/>
     </View>
   );
 };
